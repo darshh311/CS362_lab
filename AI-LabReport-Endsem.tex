@@ -1,0 +1,1257 @@
+ ,,,,,,,,,,,,,,,,,,,,,,,,,,,;\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+% The preceding line is only needed to identify funding in the first footnote. If that is unneeded, please comment it out.
+\usepackage{cite}
+\usepackage{amsmath}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\DeclareUnicodeCharacter{2212}{-}
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+\begin{document}
+
+\title{Midsem Lab Report CS362\\
+{{\footnotesize \textsuperscript{*}Note:\textbf{\href{https://github.com/darshh311/CS362_lab}{Code Repository Link}}}}
+}
+
+\author{\IEEEauthorblockN{Jinel Patel\textsuperscript{1} }
+\IEEEauthorblockA{
+\textsuperscript{1}201951075@iiitvadodara.ac.in}
+\IEEEauthorblockN{ Kapadia Tathya\textsuperscript{2}}
+\IEEEauthorblockA{
+\textsuperscript{2}201951078@iiitvadodara.ac.in}
+\and
+\IEEEauthorblockN{Patel Darsh\textsuperscript{3}}
+\IEEEauthorblockA{
+\textsuperscript{3}201951111@iiitvadodara.ac.in}
+\IEEEauthorblockN{Patel Het\textsuperscript{4}}
+\IEEEauthorblockA{
+\textsuperscript{4}201951112@iiitvadodara.ac.in}
+}
+\maketitle
+
+
+\section*{Contents}
+\section*{\textbf{Introduction}}
+\section*{\textbf{Week 1 Lab Assignment 1}}
+\section*{\textbf{Week 3 Lab Assignment 3}}
+\section*{\textbf{Week 5 Lab Assignment 4}}
+\section*{\textbf{Week 6 Lab Assignment 5}}
+\section*{\textbf{Week 7 Lab Assignment 6}}
+\section*{\textbf{Week 8 Lab Assignment 7}}
+\section*{\textbf{Week 10 Lab Assignment 8}}
+\section*{\textbf{Week 11 Lab Assignment 9}}
+\section*{\textbf{\href{https://github.com/darshh311/CS362_lab}{Code Repository Link}}
+}
+
+
+
+
+
+
+\section{Introduction}
+In these report we have included the observation,result and conclusion of the 4 experiments given to us in the lab.The 4 experiments we have included are:
+\begin{enumerate}
+    \item  Lab Assignment 1: Graph Search Agent for 8-Puzzle
+    \item  Lab Assignment 3: TSP using Simulated Annealing
+    \item  Lab Assignment 4: Game Playing Agent — Minimax
+— Alpha-Beta Pruning
+    \item Lab Assignment 5: Building Bayesian Networks in R
+\end{enumerate}
+We have understood and visualised our result in the form of tables and charts and thus discussed the same in these section.
+\\
+\\
+We have executed the codes in Jupyter Notebook for Python and RStudio for R.In these section we have discussed the approach to the problem.We have attached the link to the codes in these section.
+\\
+\textbf{\href{https://github.com/darshh311/CS362_lab}{Code Repository Link}}
+
+
+\section{Week I Lab assignment 1 }
+\textbf{Learning Objective:}
+To design a graph search agent and understand the use of a hash table, queue in state space search. In this lab, we need prior knowledge of the types of agents
+involved and use this knowledge to solve a puzzle called 8-puzzle.
+\begin{figure}[htbp]
+\centerline{\includegraphics[width=5cm, height=4cm]{8 puzzle.png}}
+\caption{Initial and Final state of 8-Puzzle \cite{b2}}
+\label{fig}
+\end{figure}
+8-Puzzle consist of a 3x3 matrix with the tiles numbered as shown and there is one white space available in which the tile can move.
+\subsection{Part A}
+Write a pseudocode for a graph search agent. Represent
+the agent in the form of a flow chart. Clearly mention all the
+implementation details with reasons.
+\begin{figure}[htbp]
+\centerline{\includegraphics[scale=0.5]{flowchart.png}}
+\caption{Flowchart for Agent}
+\label{fig}
+\end{figure}
+\newline
+\textbf{Algorithm:}
+\begin{figure}[htbp]
+\centerline{\includegraphics[scale=0.7]{algorithm.png}}
+\end{figure}
+
+
+\subsection{Part B}
+Write a collection of functions imitating the environment
+for Puzzle-8. Our code consists of following functions:
+\begin{itemize}
+    \item \textbf{Heuritic 1:} 
+Heuristic for calculating the distance of goal state
+using Manhattan distance.\cite{b6}
+\\
+\\
+Parameters:
+\\
+current state(np.ndarray): A 3x3 array with each
+cell containing unique elements as in current state
+\\
+goal state(np.ndarray): A 3x3 array with each
+cell containing unique elements as in goal state
+\\
+\\
+returns:
+\\
+heuristic1(int): Heuristic value
+\\
+    \item \textbf{Heuristic 2:}
+Heuristic for calculating the distance of goal state
+using number of misplaced tiles
+\\
+\\
+Parameters:
+\\
+current state(np.ndarray): A 3x3 array with each
+cell containing unique elements as in current state
+\\
+goal state(np.ndarray): A 3x3 array with each
+cell containing unique elements as in goal state
+\\
+\\
+returns:
+\\
+heuristic2(int): Heuristic value
+\\
+   \item \textbf{generate instance:}
+\\  
+\\
+Parameters:
+\\
+goal state(np.ndarray): A 3x3 array with each cell containing unique elements representing the goal
+\\
+depthstate(int): The depth at which the state is to be
+generated
+\\
+debug(bool): Get intermediate states and the heuristic
+values.Default value is False
+\\
+\\
+returns:
+\\
+curr state(np.ndarray): A 3x3 array with each cell containing unique elements representing the state at the given depth form, the goal state   
+\\
+     \item \textbf{get possible next state:}
+function to get the next possible state from the current state from the environment
+\\
+Parameters:
+\\
+current state(np.ndarray): A 3x3 array representing the current states
+parent(string): The path taken to reach the current state
+from initial Arrangement
+\\
+\\
+returns:
+\\
+possible moves(list): List of possible states from current state
+\\
+possible paths(list): List of possible paths moves from current state
+\\
+       \item \textbf{sort:}
+This function sorts the state according to the heuristic values generated from one of the heuristic function as selected.
+\\
+Parameters:
+\\
+possible moves(list): List of possible states from current state
+goal state(np.ndarray): A 3x3  array representing the goal state
+heuristic(Integer): An integer indicating the heuristic
+function to use from 1 or 2.
+possible paths(list): List of possible moves from current state
+\\
+\\
+returns:
+\\
+sorted possible moves(list): List of possible states from current state, sorted according to heuristic
+\\
+      \item \textbf{solution:}
+This function returns success if the goal state is found and prints failure if no goal state is found or the programme is strucked
+\\
+Parameters:
+current state(np.ndarray): A 3x3 array representing the current state
+goal state(np.ndarray): A 3x3 array representing the goal state
+heuristic(Integer): An integer indicating the heuristic
+function to use.
+\\
+\\
+\end{itemize}
+
+\subsection{Part C}
+Describe what is Iterative Deepening Search.
+\\
+\\
+\textbf{Iterative deepening depth first search (IDDFS)} Iterative Deepening search was mainly introduced to overcome the problems faced by BFS and DFS algorithms.We do a DFS search in BFS algorithm.The graph/tree is searched in DFS pattern but is allowed to go to a certain depth only.So we do a DFS in BFS algorithm.It is an approach which takes lower space and  optimal time compared to DFS or BFS.This would be clearly explained from the following figure\cite{b1}
+\begin{figure}[htbp]
+\centerline{\includegraphics[scale=0.7]{iddfs.png}}
+\caption{Iterative deepening search example\cite{b7}}
+\label{fig}
+\end{figure}
+Suppose b is the branching factor and depth is d then we have time complexity ans Space Complexity as
+\\
+\textbf{Time Complexity:} O(b\textsuperscript{d})
+\\
+\textbf{Space Complexity:} O(bd)
+\\
+\subsection{Part D}
+Considering the cost associated with every move to be the
+same (uniform cost), write a function which can backtrack
+and produce the path taken to reach the goal state from the
+source/initial state
+\\
+\\
+The Code Snippet for the function is given Under as follows:
+\begin{figure}[htbp]
+\centerline{\includegraphics[scale=0.4]{function.png}}
+\caption{Function to backtrack}
+\label{fig}
+\end{figure}
+
+\subsection{Part E}
+\newline
+Generate Puzzle-8 instances with the goal state at depth “d”.
+\\
+\\
+The Function generating these instances is "GeneralInstances" and the snippet of output is as follows:
+\begin{figure}[htbp]
+\centerline{\includegraphics[scale=1]{instance.png}}
+\caption{Function to backtrack}
+\label{fig}
+\end{figure}
+
+\subsection{Part F}
+\newline
+Prepare a table indicating the memory and time requirements to solve Puzzle-8 instances (depth “d”) using your graph search agent.
+\\
+For tracking the time and memory there are packages available in python and we have used memory\_profile.The three tables generated are given below and they are made considering the 2 different hueristic function and without any hueristic function.
+
+\begin{figure}
+\centerline{\includegraphics[scale=0.5]{table1.png}}
+{        Using Manhattan Distance Heuristic}
+
+\end{figure}
+\\
+
+\begin{figure}
+\centerline{\includegraphics[scale=0.5]{table2.png}}
+{        Using Misplaced tiles Heuristic}
+
+\end{figure}
+\\
+
+\begin{figure}
+\centerline{\includegraphics[scale=0.5]{table3.png}}
+{        Without using any Heuristic}
+
+\end{figure}
+
+
+\section{Week 3 Lab Assignment 3}
+\textbf{Learning Objective:} 
+Non-deterministic Search | Simulated
+Annealing For problems with large search spaces, randomized search becomes a meaningful option given partial/full-information about the domain.
+\\
+\\
+\textbf{Problem Statement:}
+Travelling Salesman Problem (TSP) is a hard problem, and is simple to state. Given a graph in which the nodes are locations of cities, and edges are labelled with the cost of travelling between cities, find a cycle containing each city exactly once, such that the total cost of the tour is as low as possible.
+\\
+\\
+The entire code for week 3 has been coded in Jupyter notebook and you can find the link for that code here.
+\href{https://github.com/darshh311/CS362_lab}{Code Repository Link}
+\\
+\\
+Here we are visiting 25 random nodes/points.
+\\
+\\
+\begin{figure}[htbp]
+\centerline{\includegraphics[scale=0.5]{w3_img_1.png}}
+\caption{Scatter plot for 25 nodes}
+\label{fig}
+\end{figure}
+\\
+\\
+\begin{figure}[htbp]
+\centerline{\includegraphics[scale=0.75]{w3_img_2.png}}
+\caption{Comparison between the routes of 25 nodes}
+\label{fig}
+\end{figure}
+\\
+\\
+\begin{figure}[htbp]
+\centerline{\includegraphics[scale=0.5]{w3_img_3.png}}
+\caption{Fitness curve for 25 nodes}
+\label{fig}
+\end{figure}
+\\
+\\
+
+The second plot graph in fig 7 is showing the optimal path to returning to the starting point covering all the nodes using simulated annealing to reduce the cost.
+\\
+\\
+Fig 8 shows how simulated annealing reduces the cost over each iteration. The fitness curve shows the behavior of the cost w.r.t to the number of iterations we are running to obtain the optimal path. Initially the cost is higher than the random path cost but it significantly reduces over successive iterations and as soon as the temperature is low it becomes harder to accept the worst solution cost, there the cost moves towards optimal cost with the decrease in temperature, after some iterations the curve becomes stable - so we can conclude that not many changes are happening and the cost that we are getting is the optimal cost.
+
+
+
+
+
+\subsection{Part A}
+ For the state of Rajasthan, find out at least twenty important tourist locations.  Suppose your relatives are about to visit you next week.  Use Simulated Annealing to plan a cost effective tour of Rajasthan.  It is reasonable to assume that the cost of traveling between two locations is proportional to the distance between them.
+\\
+\\
+We have selected 25 locations for us to visit. Now we will calculate the euclidean distance for all the pair of coordinates for all the locations. After that we will plot a random route connecting all the nodes and using simulated annealing we will find the optimal cost to cover all the locations/nodes shown in fig 10.\cite{b4}
+\\
+\\
+\begin{figure}[htbp]
+\centerline{\includegraphics[scale=0.5]{w3_img_4.png}}
+\caption{Scatter plot for 25 locations in Rajasthan}
+\label{fig}
+\end{figure}
+\\
+\\
+
+\begin{figure}[htbp]
+\centerline{\includegraphics[scale=0.5]{w3_img_5.png}}
+\caption{Optimal path for 25 locations in Rajasthan}
+\label{fig}
+\end{figure}
+\\
+\\
+
+
+\subsection{Part B}
+VLSI: \href{http://www.math.uwaterloo.ca/tsp/vlsi/index.html}{Dataset}
+Attempt at least five problems from the above list and compare
+your result
+\\
+\\
+
+Here we will be doing the same procedure to find the optimal route as we did in the Rajasthan problem in the datasets from VLSI viz. 131 points, 237 points, 343 points, 379 points, and 380 points.
+\\
+\\
+\subsubsection{XQF131 - 131 points}
+\\
+\\
+--
+\\
+\\
+\begin{figure}[htbp]
+\centerline{\includegraphics[scale=0.5]{w3_img_6.png}}
+
+\label{fig}
+\end{figure}
+\begin{figure}[htbp]
+\centerline{\includegraphics[scale=0.5]{w3_img_7.png}}
+\caption{Plots for 131 points}
+\label{fig}
+\end{figure}
+\\
+\\
+\subsubsection{XQF237 - 237 points}
+\\
+\\
+-
+\\
+\\
+\begin{figure}[htbp]
+\centerline{\includegraphics[scale=0.25]{237-2.png}}
+\label{fig}
+\end{figure}
+\\
+\\
+\begin{figure}[htbp]
+\centerline{\includegraphics[scale=0.75]{237-3.png}}
+\caption{Plot for 237 points}
+\label{fig}
+\end{figure}
+
+\subsubsection{PMA343 - 343 points}
+
+--
+\\
+\\
+\begin{figure}[htbp]
+\centerline{\includegraphics[scale=0.5]{w3_img_9.png}}
+\caption{Plot for 343 points}
+\label{fig}
+\end{figure}
+\\
+\\
+\subsubsection{PKA379 - 379 points}
+--
+\\
+\\
+\begin{figure}[htbp]
+\centerline{\includegraphics[scale=0.5]{w3_img_10.png}}
+\caption{Plot for 379 points}
+\label{fig}
+\end{figure}
+\\
+\\
+\subsubsection{BLC380 - 380 points}
+--
+\\
+\\
+\begin{figure}[htbp]
+\centerline{\includegraphics[scale=0.5]{w3_img_11.png}}
+\caption{Plot for 380 points}
+\label{fig}
+\end{figure}
+\subsection{Comparing Results}
+In fig 16 we can see that the final cost that we are getting i.e the optimal cost is smaller than the cost that we get when we use a random route. When we compare our results with the ones given in the VLSI datasets we find that our calculated final cost is comparable with the optimal cost of VLSI.
+\\
+\\
+\begin{figure}[htbp]
+\centerline{\includegraphics[scale=0.5]{w3_img_12.png}}
+\caption{Plot for 380 points}
+\label{fig}
+\end{figure}
+We can also further decrease the cost by increasing the iterations and using heuristic functions to solve the traveling salesman problem.
+\\
+\\
+\begin{figure}[htbp]
+\centerline{\includegraphics[scale=0.5]{w3_img_13.png}}
+
+\label{fig}
+\end{figure}
+
+
+
+
+
+
+\section{WEEK 5 LAB ASSIGNMENT 4}
+\textbf{Learning Objective:} Game Playing Agent | Minimax |
+Alpha-Beta Pruning
+
+\subsection{Part 1}
+What is the size of the game tree for Noughts and Crosses? Sketch the game tree.
+\\
+\\
+Considering the Depths at every level we have
+\\
+At Depth 1 = 9 Possibilities
+\\
+At Depth 2 = 9*8 Possibilities
+\\ 
+At Depth 3 = 9*8*7 Possibilities
+\\
+So we have total number of states available are almost equal to 10\textsuperscript{6} 
+\\
+The Graph tree can be given as Follows:
+\newline
+\begin{figure}[htbp]
+\centerline{\includegraphics[scale=0.65]{graphtree.png}}
+\caption{Graph of the tree}
+\label{fig}
+\end{figure}
+\\
+\\
+\subsection{Part 2}
+Read about the game of Nim (a player left with no move losing the game). For the initial configuration of the game with three piles of objects as shown in Figure, show that regardless of the strategy of player-1, player-2 will always win. Try to explain the reason with the MINIMAX value backup argument on the game tree
+\\
+The initial Configuration of the nim game given to us is:
+\begin{figure}[htbp]
+\centerline{\includegraphics[scale=1]{nim.png}}
+\caption{Graph of the tree}
+\label{fig}
+\end{figure}
+\\
+To show that Player 2 always win we use the minimax algorithm and the player is allowed to take from one column only so if the player moves such that the XOR of all the three towers become zero\cite{b9} so if the player 1 proceeds like this player 2 would always win as shown in the figure:
+\\
+\begin{figure}[htbp]
+\centerline{\includegraphics[scale=1]{p1p2.png}}
+\caption{Player taking turns in Nim}
+\label{fig}
+\end{figure}
+
+\subsection{Part 3}
+Implement MINIMAX and alpha-beta pruning agents. Report on number of evaluated nodes for Noughts and Crosses
+game tree.\cite{b5}
+
+The given code are here\href{https://github.com/darshh311/CS362_lab}{Code Repository Link}
+\\
+\\
+The output snippet is given as shown in figure 20:
+\begin{figure}[htbp]
+\centerline{\includegraphics[scale=0.9]{minimax2.png}}
+\caption{Output of Minimax and Alpha beta-pruning}
+\label{fig}
+\end{figure}
+
+\subsection{Part 4}
+Using recurrence relation show that under perfect ordering of leaf nodes, the alpha-beta pruning time complexity is O(bm/2), where b is the effective branching factor and m is the depth of the tree.
+\\
+Let m be the depth of the tree and b be the effective
+branching factor.
+\\
+T(m) be the minimum number of states to be traversed to
+find the exact value of the current state, and
+\\
+K(m) be the minimum number of states to be traversed to
+find the bound on the current state.
+\\
+\\
+We get the equation as:
+\begin{equation}
+T(m)=T(m-1)+(b-1)K(m-1)\label{eq}
+\end{equation}
+\\
+T(m-1) is to traverse to child node and find the
+exact value, and (b-1)K(m-1) is to find min/max bound for
+the current depth of the tree as we have to find using recursion.
+\\
+\\
+In best case, we know that
+\\
+\begin{equation}
+T(0) = K(0) = 1\label{eq}
+\end{equation}
+\\
+exact value of one child is
+\begin{equation}
+K(m)=T(m−1)\label{eq}
+\end{equation}
+\\
+From the given relation we have:
+\\
+\begin{equation}
+T(m) = T(m−1) + (b−1)K(m−1)\label{eq}
+\end{equation}
+\\
+\begin{equation}
+T(m−1) = T(m-2) + (b−1)K(m−2)\label{eq}
+\end{equation}
+\\
+so on we get 
+\\
+\begin{equation}
+T(1) = T(0) + (b-1)K(0) = 1 + b-1 = b(10)\label{eq}
+\end{equation}
+\\
+using equation 4 and 5 we get
+\\
+\begin{equation}
+T(m) = T(m−2)+(b−1)K(m−2)+(b−1)K(m−1) \label{eq}
+\end{equation}
+\\
+\begin{equation}
+\begin{split}
+T(m) = T(m − 3) + (b − 1)K(m − 3)
+\\+ (b − 1)K(m − 2)+ (b-1)K(m-1) \label{eq}
+\end{split}
+\end{equation}
+\\
+Using 3 and 8 we get
+\\
+\begin{equation}
+\begin{split}
+T(m) = T(m − 2) + (b − 1)T(m − 3) +
+\\(b − 1)T(m − 2)= b(T(m-2)) + (b-1)T(m-3) \label{eq}
+\end{split}
+\end{equation}
+\\
+\\
+Now we can clearly say that
+\begin{equation}
+T(m − 2) > T(m − 3) \label{eq}
+\end{equation}
+\\
+So we can predict
+\\
+\begin{equation}
+T(m) < (2b − 1)T(m − 2) \label{eq}
+\end{equation}
+\\
+\\
+Considering large values of b
+\begin{equation}
+T(m) < 2bT(m − 2) \label{eq}
+\end{equation}
+\\
+From these we can conclude from these that the effective branching factor is less than \sqrt{2b}
+\\
+\\
+Time Complexity  = O(b\textsuperscript{m/2})
+
+\section{WEEK 6 LAB ASSIGNMENT 5}
+\textbf{Learning Objective:}
+Understand the graphical models for inference under uncertainty, build Bayesian Network in R, Learn the structure and CPTs from Data, naive Bayes classification with dependency between features.
+\\
+\\
+\textbf{Problem Statement:}
+A table containing grades earned by students in respective courses is made available to you in (codes folder) 2020\_bn\_nb\_data.txt.
+
+\\
+\subsection{Part A}
+Here let us consider the grades earned in each of the courses as random variable and learn the dependencies between the courses.
+\\
+The dependencies can be learned using  'bnlearn package in R as well as using the function called hill climbing greedy search. 
+\\
+\\
+Hill climbing is the score-based algorithm. As our dataset is categorical we learn the scores of discrete Bayesian Network - k2 and bic - and compare both of them.\cite{b3}
+\\
+\\
+
+\subsubsection{Using k2 score}
+\\
+\\
+\begin{figure}[htbp]
+\centerline{\includegraphics[scale=0.5]{w5_img_1.png}}
+\caption{Hill Climbing Bayesian Network using K2 score}
+\label{fig}
+\end{figure}
+
+There are in total 7 arcs in fig 21 and the model string is showing this dependency: '[IT161] [IT101|IT161] [MA101|IT101] [HS101|IT101]
+[EC100|MA101] [PH160|HS10] [EC160|EC100]
+[PH100|EC100]’
+
+\subsubsection{Using bic score}
+
+There are only two arcs in fig 22 and the model string showing this dependency is '[EC100] [EC160] [IT101] [IT161] [PH160] [HS101]
+[MA101|EC100] [PH100|EC100]'
+
+\begin{figure}[htbp]
+\centerline{\includegraphics[scale=0.5]{w5_img_2.png}}
+\caption{Hill Climbing Bayesian Network using bic score}
+\label{fig}
+\end{figure}
+\\
+\\
+Since we are interested to find the dependency of the
+different grades, we can see that the k2 score gives a better idea
+of how the scores are dependent on each other, furthermore k2 is generally considered a good choice for large datasets. So, for the further parts, we’ll only use the network learned
+using the k2 score.\cite{b8}
+\\
+\\
+
+\subsection{Part 2}
+Using the data, learn the CPTs for each course node.
+\\
+\\
+According to the network learned using the k2 score, we
+plot the conditional probabilities.
+\\
+\\
+
+\begin{figure}[htbp]
+\centerline{\includegraphics[scale=0.5]{w5_img_3.png}}
+\caption{Conditional probability distributions made form the
+CPTs of the learned data}
+\label{fig}
+\end{figure}
+
+\subsection{Part 3}
+What grade will a student get in PH100 if he earns DD in
+EC100, CC in IT101 and CD in MA101.
+\\
+\\
+We use the "cpdist" function of the "bnlearn" package in R to get distribution of grades of PH100 when the student has earned DD in EC100, CC in IT101 and CD in MA101.That distribution graph is shown in fig 23 and the distribution table shown below.
+
+\begin{figure}[htbp]
+\centerline{\includegraphics[scale=0.5]{w5_img_4.png}}
+\caption{Probability distribution of getting a grade in PH100
+as per the given evidence}
+\label{fig}
+\end{figure}
+
+\begin{figure}[htbp]
+\centerline{\includegraphics[scale=0.5]{w5_img_5.png}}
+
+\label{fig}
+\end{figure}
+
+
+\subsection{Part 4}
+The last column suggests if the student is eligible for internship or not.
+Now we take 70 percent for training and build a naive Bayes classifier, which will take in students performance and return if the student is eligible for internship or not. Now test the model for the remaining 30 percent. Repeat the experiment for 20 iterations.
+\\
+\\
+So now we split the dataset of 231 into training of 162 and testing of 69 samples.
+\\
+\\
+We use the NBC using the function 'nb' from the package 'bnclassify' in R tolearn the naive Bayes network structure and then the function ’lp’ to learn the parameters. Here, we do not assume any dependency between
+the grade nodes, therefore classifier learns assuming the data to be independent.
+
+\begin{figure}[htbp]
+\centerline{\includegraphics[scale=0.5]{w5_img_6.png}}
+\caption{Naive Bayes Classifier for independent data}
+\label{fig}
+\end{figure}
+
+\\
+\\
+This network model learns on the training dataset that we split. The accuracy has been shown in the table below.
+
+\begin{figure}[htbp]
+\centerline{\includegraphics[scale=0.5]{w5_img_7.png}}
+
+\label{fig}
+\end{figure}
+\\
+\\
+\subsection{Part 5}
+Repeat part 4, just considering the grades earned are dependent.
+\\
+\\
+To learn the features we use 'tan-chow' function. The classifier learns on the structure as shown below.
+
+\begin{figure}[htbp]
+\centerline{\includegraphics[scale=0.25]{w5_img_8.png}}
+\caption{Naive Bayes Classifier for dependent data}
+\label{fig}
+\end{figure}
+\\
+\\
+This network learns on training dataset that we split in the earlier part.
+
+\begin{figure}[htbp]
+\centerline{\includegraphics[scale=0.5]{w5_img_9.png}}
+
+\label{fig}
+\end{figure}
+\\
+\\
+\section{WEEK 6 LAB ASSIGNMENT 5}
+\textbf{Learning Objective:}
+To implement Expectation Maximization routine for learning parameters of a Hidden Markov Model, to be able to use the EM framework for deriving algorithms for problems with hidden or partial information.
+\textbf{Code Repository:}
+The given code are here\href{https://github.com/darshh311/CS362_lab}{ Code Repository Link}
+\subsection{Part A}
+\\
+  Read through the reference carefully. Implement routines for
+learning the parameters of HMM given in section 7. In section
+8, "A not-so-simple example", an interesting exercise is carried
+out. Perform a similar experiment on "War and Peace" by Leo
+Tolstoy.
+From the reference "A Revealing Introduction to Hid-
+den Markov Models" \cite{b10}, we calculated 	$\alpha$-pass , $\beta$-pass,
+di-gammas for re-estimating the state transition probability
+matrix (A), observation probability matrix (B), initial state
+distribution ($\pi$) for Leo Tolstoy's book War and Peace. We
+re-estimated A,B and based on the observed sequence O,
+taking initial values for A, B and and calculating a, 3, the
+di-gammas and log probability for the data i.e. War and Peace.
+We took 50000 letters from the book after removing all the
+punctuation and converting the letters to lower case just as
+given in the example problem in section 8 [16]. We initialized
+each element of $\pi$ and A randomly to approximately 1/2. The initial 
+values are.
+
+\begin{equation}
+ \pi =  {[0.513 0.486]}
+\end{equation}
+\[
+A=
+  \begin{bmatrix}
+    0.47648 & 0.52532 \\
+    0.51656 & 0.48344 
+  \end{bmatrix}
+\]                                        
+\\
+ Each element of B was initialized to approximately 1/27.
+The precise values in the initial B are given in the Tab IX.
+After initial iteration,
+\begin{figure}[htbp]
+\centerline{\includegraphics[scale=0.7]{eq1.JPG}}
+\label{fig}
+\end{figure}
+\\
+After the 100 iterations the model converged to
+\begin{figure}[htbp]
+\centerline{\includegraphics[scale=0.7]{eq2.JPG}}
+
+\label{fig}
+\end{figure}
+\\
+So our model has improved significantly after 100 iteration. The model 
+converges after 100 iteration to:
+\\
+\begin{figure}[htbp]
+\centerline{\includegraphics[scale=0.7]{eq3.png}}
+
+\label{fig}
+\end{figure}
+\\
+With final values of transpose of B in the Table given below.
+By looking at the B matrix we can see that the hidden state
+contains vowels and consonants and space is counted as a
+vowel. The first column of initial and final values in Table given
+below are the vowels and the second column are the consonants.
+\\
+\begin{figure}[htbp]
+\centerline{\includegraphics[scale=0.7]{fig3.png}}
+
+\label{fig}
+\end{figure}
+\\
+\subsection{Part B}
+ Ten bent (biased) coins are placed in a box with unknown
+bias values. A coin is randomly picked from the box and
+tossed 100 times. A file containing results of five hundred
+such instances is presented in tabular form with 1 indicating
+head and 0 indicating tail. Find out the unknown bias values.
+{(2020\_ten\_bent\_coins.csv)} To help you, a sample code for two
+bent coin problem along with data is made available in the
+work folder: {two_bent_coins.csv} and {embentcoinsol.m}
+\\
+\par For the above problem, we used Expectation Maximization
+algorithm from the reference material\cite{b11} already shared.
+An expectation-maximization (EM) algorithm is an iterative
+method to find (local) maximum likelihood or maximum a
+posteriori (MAP) estimates of parameters in statistical models,
+where the model depends on unobserved latent variables\cite{b12}.
+\par In our case, the latent variables are z, the coin types. We have
+no knowledge of the coins but the final outcome of 500 trials.
+We used EM to estimate the probabilities for each possible
+completion of the missing data, using the current parameters
+Ꮎ .We took reference from Karl Rosaen's solution for 2
+bent coins problem\cite{b13}.
+\\
+\subsection{Part C}
+A point set with real values is given in
+{2020\_em\_clustering.csv} Considering that there are two
+clusters, use EM to group together points belonging to the
+same cluster. 
+\par Try and argue that k-means is an EM algorithm.
+We used Expectation Maximization algorithm for grouping
+the points belonging to the same cluster. We also used k-means for comparing 
+with EM algorithm clustering.
+\\
+\begin{figure}[htbp]
+\centerline{\includegraphics[scale=0.7]{fig4.png}}
+\caption{EM Clustering}
+\label{fig}
+\end{figure}
+\\
+\par In above Figure, the lines depicted with black color are the points
+from the given dataset and the lines depicted with blue and red
+respectively are the two clusters formed by the EM algorithm
+from the dataset. The model has grouped the points belonging
+to the same cluster.
+\begin{figure}[htbp]
+\centerline{\includegraphics[scale=0.7]{fig6.png}}
+\caption{k-means Clustering}
+\label{fig}
+\end{figure}
+\\
+\par From the above below, we can infer that k-means and EM
+algorithm results are same i.e. 19 points lie in the first cluster
+and 21 points lie in the second cluster out 40 given points.
+
+\par k - means uses hard-clustering which means that a point
+either belongs to the cluster or it does not belong the cluster.
+EM algorithm uses soft-clustering technique to assign points to
+a cluster, it gives the probability that a particular point belongs
+to a cluster. In this assignment, from the given dataset both the
+methods EM algorithm and k - means yield the same result
+because the dataset was in such a way that the probability of a
+point belonging to a cluster was sufficient to assign the point
+to that cluster therefore the soft-clustering and hard-clustering
+yield the same result.
+\\
+\section{Week 8 Lab Assignment 7}
+\textbf{Learning Outcome} To model the low level image processing tasks in the framework of Markov Random Field and Conditional Random Field. To understand the working
+of Hopfield network and use it for solving some interesting combinatorial problems
+\subsection{Part A}
+\\
+\par Many low level vision and image processing problems are
+posed as minimization of energy function defined over a
+rectangular grid of pixels. We have seen one such problem,
+image segmentation, in class. The objective of image denoising
+is to recover an original image from a given noisy image,
+sometimes with missing pixels also. MRF models denoising
+as a probabilistic inference task. Since we are conditioning the
+original pixel intensities with respect to the observed noisy
+pixel intensities, it usually is referred to as a conditional
+Markov random field. Refer to (3) above. It describes the
+energy function based on data and prior (smoothness). Use
+quadratic potentials for both singleton and pairwise potentials.
+Assume that there are no missing pixels. Cameraman is a
+standard test image for benchmarking denoising algorithms.
+Add varying amounts of Gaussian noise to the image for
+testing the MRF based denoising approach. Since the energy
+function is quadratic, it is possible to find the minima by
+simple gradient descent. If the image size is small (100x100)
+you may use any iterative method for solving the system of
+linear equations that you arrive at by equating the gradient to
+zero.
+\par  We started with first importing the image of the 'camera-
+man', which is a standard image for benchmarking denoising
+algorithms, as it is very dynamic in the grayscale pixel range.
+\cite{b14}.This is a 512x512 grayscale image. We normalize the pixel
+values to be between 0 and 1, by dividing all values by 255,
+and then 'binarizing' it for the Markov Random Field by
+converting all the normalized pixel values below 0.5 to 0 and
+the rest to 1, as shown in Fig 26.
+\par We, then introduce noise to this 'binarized' image. In order
+to test the capability, we add varying levels of noise, from 5\%
+to 25\% of the pixel values.
+The varying levels of noises are shown in the given figure
+\par Markov random fields use a quadratic potential function to
+measure the energy potential of the image when changing a
+particular pixel, with respect to the neighbouring pixels.
+The quadratic potential function is given by:
+\\
+\begin{figure}[htbp]
+\centerline{\includegraphics[scale=0.7]{fig5.png}}
+\end{figure}
+ where v is the smooth ID signal, u is the IID and E is the
+energy function.
+This is because for most cases, the values around a pixel
+are close to the pixel value.\cite{b15}, \cite{b16}. We use the value of
+the constant lambdas as -100, while computing the quadratic
+potential function.
+We ran the algorithm for 5*512*512 = 1310720 iterations.
+\\
+\begin{figure}[htbp]
+\centerline{\includegraphics[scale=0.7]{fig7.png}}
+\caption{Cameraman Photographs}
+\label{figure}
+\end{figure}
+\\
+\begin{figure}[htbp]
+\centerline{\includegraphics[scale=0.4]{fig8.png}}
+\caption{Images with various level of noises}
+\label{figure}
+\end{figure}
+\\
+The table is as follows: 
+\begin{figure}[htbp]
+\centerline{\includegraphics[scale=0.7]{fig9.png}}
+\end{figure}
+\\
+\subsection{Part B}
+\par  For the sample code hopfield.m supplied in the lab-work
+folder, find out the amount of error (in bits) tolerable for each
+of the stored patterns.
+\par For this task, we converted the hopfield.m MATLAB codes
+to Python so that we could do it in the same Notebook as the
+other parts. The original images looked as shown in fig. 30.
+The network was trained using Hebb's rule, as in the file
+and then they were noised by changing some random pixel
+values. At max, 15 pixel values were noised. We can see that suprisingly,
+the network can correct upto max 8 errors. The results are show in fig 33.
+\\
+\begin{figure}[htbp]
+\centerline{\includegraphics[scale=0.4]{fig10.png}}
+\caption{Denoising Image using MRF}
+\label{figure}
+\end{figure}
+\\
+\begin{figure}[htbp]
+\centerline{\includegraphics[scale=0.4]{fig11.png}}
+\caption{Original Letters of Hopfield}
+\label{figure}
+\end{figure}
+\\
+\begin{figure}[htbp]
+\centerline{\includegraphics[scale=0.2]{fig14.png}}
+\caption{Original Noised and corrected Image}
+\label{figure}
+\end{figure}
+\subsection{Part C}
+\par Solve a TSP (travelling salesman problem) of 10 cities with
+a Hopfield network. How many weights do you need for the
+network?
+\par  This is the usual famous NP-hard problem of Travelling
+Salesman, that is done using the a Hop field Networks.
+Since in a Hop field Network, each node is connected to
+each other node, we needed a total of 10x10= 100 weights.
+We first generate 10 cities randomly, as shown in fig 31.
+And then let the hop field network predict an optimal least
+path cost.
+The path that we got was as shown in fig 35.
+\\
+\begin{figure}[htbp]
+\centerline{\includegraphics[scale=0.5]{fig12.png}}
+\caption{Cities}
+\label{figure}
+\end{figure}
+\\
+\begin{figure}[htbp]
+\centerline{\includegraphics[scale=0.5]{fig13.png}}
+\caption{Shortest Path}
+\label{figure}
+\end{figure}
+\\
+\section{Week 10 Lab Assignment 8}
+\textbf{Learning Objective}Basics of data structure needed for state-space search tasks and use of random numbers required
+for MDP and RL.
+\\
+\\
+\textbf{ Problem Statement: }
+Read the reference on MENACE by Michie and check for its implementations. Pick the one that  you like the most and go through the code carefully. Highlight the parts that you feel are crucial. If possible, try to code the.MENACE in any programming language of your liking.
+\\
+\subsection{ What is Menace ?}
+\par  MENACE stands for Machine Educable Noughts and
+Crosses Engine \cite{b17}. It was originally described by Donald
+Michie, who used matchboxes to record each game he played
+against this algorithm. This provides an adequate conceptual
+basis for a trial-and-error learning device, provided that the
+total number of choice-points which can be encountered is
+small enough for them to be individually listed. Michie's aim
+was to prove that a computer could "learn" from failure and
+success to become good at a task.
+\\
+\subsection{ Why Matchbox Machine?}
+\par  Matchboxes were used because each box contained an
+assortment of variously coloured beads. The different colours
+correspond to the different unoccupied squares to which moves
+could be made.
+\\ 
+\begin{figure}[htbp]
+\centerline{\includegraphics[scale=0.7]{fig15.png}}
+\caption{Color Code of Matchbox}
+\label{figure}
+\end{figure}
+\\
+\subsection{How does Menace learn?}
+\par  A loss is punished by a removing the beads that were
+chosen from the boxes. This means that MENACE will be  
+less likely to pick the same colors again and has learned. A
+win is rewarded with three beads of the chosen color which
+is added to each box, reinforcing the MENACE to make the
+same move again. If a game is a draw, one bead is added to
+each box.
+\par From the figure [37], we can see the number of beads
+present inside a box on any given stage. Removing one bead
+from each box after losing means that later these moves are
+less likely to be picked and this helps MENACE learn more
+quickly, as the later moves are more likely to have led to the
+loss.
+\par It is possible that after few games some boxes may end
+up empty. If one of these boxes is to be used, then MENACE
+resigns. When playing against skilled players, it is possible that
+the first move box runs out of beads. In this case, MENACE
+should be reset with more beads in the earlier boxes to give
+it more time to learn before it starts resigning.[18]
+\\
+\begin{figure}[htbp]
+\centerline{\includegraphics[scale=0.7]{fig16.png}}
+\caption{Variation of the number of color replicates}
+\label{figure}
+\end{figure}
+\\
+\begin{figure}[htbp]
+\centerline{\includegraphics[scale=0.7]{fig17.png}}
+\caption{The progress of MENACE'S maiden tournament
+against a human opponent. The line of dots drops one level
+for a defeat, rises one level for a draw and rises three levels
+for a victory.}
+\label{figure}
+\end{figure}
+\\
+\subsection{Result}
+The result is present in the code link.
+\\
+\section{Week 11 Lab Assignment 9}
+\textbf{Learning Objective}\:Understanding Exploitation \- Exploration in simple n-arm bandit reinforcement learning task, epsilon-greedy algorithm
+\\
+\subsection{Part A}
+\\
+\par Consider a binary bandit with two rewards 1-success, 0-
+failure. The bandit returns 1 or 0 for the action that you
+select, i.e. 1 or 2. The rewards are stochastic (but stationary).
+Use an epsilon-greedy algorithm discussed in class and decide
+upon the action to take for maximizing the expected reward.
+There are two binary bandits named binaryBanditA.m and
+binary BanditB.m are waiting for you.
+\par After using both the rewards(function) binary BanditA and
+binary BanditB here is what we observe :
+\\
+\par Although the probability reward was low in bandit A the expected reward 
+was 0 now as the number of trials increases the expected reward also increase
+but this is not the same with bandit B.In this bandit initially the expected 
+reward was 1 then it step down to be around 0\.8 and become constant.
+\\
+\subsection{Part B}
+\\
+\par Develop a 10-armed bandit in which all ten mean-rewards
+start out equal and then take independent random walks (by
+adding a normally distributed increment with mean zero and
+standard deviation 0.01 to all mean-rewards on each time step).
+\\
+\par This is the case of 10 arm-bandit where the mean-rewards
+are initially taken as a constant valued array initialised by
+1. We performed exploration and exploitation based on the
+Epsilon Greedy Algorithm. A random number between 0 and
+1 is generated and if it comes out to be greater than epsilon, we
+perform exploitation, which is based on the prior knowledge
+otherwise exploration. For every iteration an array of ten
+values is generated such that they are normally distributed
+with mean value zero and standard deviation of 0.01. This
+array is added to the mean array and this updated array is
+used every time. For every action a reward is given from this
+updated mean-rewards array. The rewards given in this case
+are non-stationary.
+\\
+\begin{figure}[htbp]
+\centerline{\includegraphics[scale=0.7]{fig20.png}}
+\caption{Reinforcement multipliers in trial runs}
+\label{figure}
+\end{figure}
+\\
+\begin{figure}[htbp]
+\centerline{\includegraphics[scale=0.7]{fig19.png}}
+\caption{Expected Reward in Bandit A}
+\label{figure}
+\end{figure}
+\\
+\par Here we observe that as initially all the rewards were equal
+so that we get a constant reward of say like 1 but as the steps
+increases, it affects the rewarding policy of every action and then
+starts increasing at very high non-zero rate.
+\\
+\subsection{Part C}
+\par  The 10-armed bandit that you developed (banditnonstat) is
+difficult to crack with standard epsilon-greedy algorithm since
+the rewards are non-stationary. We did discuss about how to
+track non-stationary rewards in class. Write modified epsilon-
+greedy agent and show whether it is able to latch onto correct
+actions or not.
+\\
+\begin{figure}[htbp]
+\centerline{\includegraphics[scale=0.7]{fig18.png}}
+\caption{Expected Reward in Bandit B}
+\label{figure}
+\end{figure}
+\\
+\begin{figure}[htbp]
+\centerline{\includegraphics[scale=0.7]{fig21.png}}
+\caption{Expected Rewards in Non stationary rewards(averaging)}
+\label{figure}
+\end{figure}
+\\
+\par This is same as problem 2 except the calculation of action
+rewards. In this case, instead of using averaging method to
+update estimation of action reward, we are assigning more
+weights to the current reward earned by using alpha parameter
+having value 0.7
+\par  Here we can see that as compared to problem 2, in which
+the expected rewards were low, we saw that when instead of
+averaging the profit percentage of state when we gave higher
+weightage to the to the current value at every step (a normally
+distributed array is added to the rewards array), the expected
+rewards we get were much higher as in the case 2 and the
+slope of the graph was too steeper when compared with case
+2.
+\\
+\begin{figure}[htbp]
+\centerline{\includegraphics[scale=0.7]{fig22.png}}
+\caption{Expected Rewards in Non stationary rewards(Non averaging)}
+\label{figure}
+\end{figure}
+\\
+\section*{Conclusion}
+\\
+\\
+As we have demonstrated in the above problems we have successfully solved 8 puzzle problem,Travelling salesman problem (tsp), Noughts and Crosses Game, Nim game and understood the Bayesian graphical Models to build network Graphs.
+\\
+\\
+The importance of Heuristic plays an important role in solving the real life problems as as solving the problems in considerable amount of time as compared without Heuristic functions saving time as well as memory for big dataset problems.
+\\
+\\
+In the Travelling Salesman problem we learned to use simulated annealing to find the optimal path or the sub optimal path.
+\\
+\\
+From our observation in the minimax algo we find that alpha-beta pruning is not a different algorithm than mini-max it is just a speed up process which does not evaluate approximate values instead evaluates to perfectly same values.
+\\
+\\
+Lastly we explored the Bayesian network and were able to model it using grades data-set, we then calculated Conditional Probability Tables (CPTs) for them and saw how they were dependent.
+\\
+\\
+From the Markov Random Field and Hopfield networks,
+we learned how to construct learning machines using Markov
+Decision Processes. Hopfield Network showed how we can
+use a simple collection of neurons to construct a very robust
+network, that can resist ignore large noises and still predict
+a correct output and lastly, we saw how they can be used in
+Travelling Salesman Problem to get an optimal path.
+\\
+\\
+In Menace we have learnt that how the machine learns using Reinforcement
+Learning but it requires various Iteration.
+\\
+\\
+ From the HMM and EM algorithm problem, we applied
+a HMM model to the 50,000 letters observations including
+space and all lowercase characters. After about 100 iterations
+we observed that the B matrix tells us about two
+distinct categories of characters. Upon closely observing, we
+find that one set contains consonants while the other contains
+vowels. For the second part we apply EM algorithm to the 10
+bent coin problem (similar to well known 2 bent coin example)
+to find the latent parameters and estimate the hidden biases
+for the coins. In the third part we learnt about soft and hard
+clustering and EM algorithm clustering for given dataset, we
+also learnt about the k-means and how k-means compares to
+EM algorithm.
+\\
+\\
+For the n arm bandit we learned how the problem works and
+the epsillon greedy algorithm,we saw that how that algorithm
+can be modelled for both the stationary environment case and
+the non stationary case just be simply giving more weightage
+to the current step.
+
+
+\section*{Acknowledgment}
+\\
+We would like to thank out Prof. Pratik Shah and our TA Sir Prashant Dhameja as well as my colleagues.it is due to the lectures in AI that we were able to understand the problem as well as able to solve it.
+\\
+We would also like to thank the sources as well the online materials that we have used.
+
+\begin{thebibliography}{00}
+\bibitem{b1} Russell, S. and Norvig, P., 2002. Artificial intelligence: a modern approach.
+\bibitem{b2}8 puzzle problem -benchpartner.com
+\bibitem{b3}Shah Pratik, An Elementary Introduction to Graphical Models February
+2021
+\bibitem{b4}Zhou, Ai-Hua, Traveling-salesman-problem algorithm based on simulated annealing and gene-expression programming. Information 10.1 2019.
+\bibitem{b5} Best-Case Analysis of Alpha-Beta Pruning. http://www.cs.utsa.edu/ ∼bylander/cs5233/a-b-analysis.pdf.
+\bibitem{b6} Khemani, D., 2020. Artificial Intelligence: The Big Picture. Resonance: Journal of Science Education, 25(1).
+\bibitem{b7}iddfs - stackoverflow.
+\bibitem{b8}Bojan Mihaljevic,´ Bayesian networks with R November 2018.
+\bibitem{b9}Marianne Freiberger, Play to win with Nim.July 21, 2014.
+\bibitem{b10} Stamp, Mark, A revealing introduction to hidden Markov models, 2004.
+\bibitem{b11} What is the expectation maximization
+maximization algorithm? Chuong B Do and Serafim Batzoglou, Nature Biotechnology, Vol 26, Num 8, August 2008 https://datajobs.com/data-science-repo/
+Expectation-Maximization-Primer-[Do-and-Batzoglou].pdf
+\bibitem{b12} Expectation-maximization algorithm https://en.wikipedia.org/wiki/
+Expectation maximization algorithm
+\bibitem{b13} Expectation Maximization with Coin Flips http://karlrosaen.com/ml/
+notebooks/em-coin-flips/
+\bibitem{b14} What is the reason the test image "Cameraman" is used widely
+to test algorithms in image processing and image encryption\?
+https:\/\/www.researchgate.net\/
+\bibitem{b15} Image Denoising Benchmark https://www.cs.utoronto.ca/~strider/
+Denoise/Benchmark/
+\bibitem{b16} Markov Random Fields https://web.cs.hacettepe.edu.tr/~erkut/bil717.
+s12/w11a-mrf.pdf
+\bibitem{b17} MENACE: Machine Educable Noughts And Crosses Engine https:
+//people.csail.mit.edu/brooks/idocs/matchbox.pdf
+\end{thebibliography}
+\vspace{12pt}
+
+
+\end{document}
